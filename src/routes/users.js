@@ -8,5 +8,8 @@ router.post(
     usersMiddleware.validateCreateUser, 
     usersController.createUser
 )
-
+router.get(
+    '/users',
+    usersController.getuser
+)
 module.exports = router;
