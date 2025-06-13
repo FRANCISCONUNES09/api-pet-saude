@@ -4,10 +4,12 @@ const app = express()
 const port = 4028
 require('./src/models')
 const usersRoutes = require('./src/routes/users')
+const authRoutes = require('./src/routes/auth')
 
 
 app.use(express.json())
 app.use(usersRoutes)
+app.use(authRoutes)
 
 app.listen(port, () => {
   console.log(`O servidor está rodando na porta ${port}`)
