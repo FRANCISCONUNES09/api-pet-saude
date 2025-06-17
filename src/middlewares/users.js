@@ -1,24 +1,34 @@
-const express = require('express')
-const router = express.Router()
-const usersMiddleware = require('../middlewares/users')
-const usersController = require('../controllers/users')
+const { Users } = require('../models')
 
-router.post(
-    '/users', 
-    usersMiddleware.validateCreateUser, 
-    usersController.createUser
-)
-router.get(
-    '/users',
-    usersController.getuser
-)
-router.delete(
-    '/users/:id',
-    usersController.deleteUser
-)
+async function validateCreateUser(req, res, next) {
+    const { name, email, password } = req.body;
 
-router.put(
-    '/users/:id',
-    usersController.updateUser
-)
-module.exports = router;
+    
+   if(!name || !email || !password) {
+      return res.status(400).send({ error: 'Todos os campos são obrigatórios' })
+   }
+
+   if(name.length > 255) {
+        return res.status(400).send({ error: 'O nome não pode ter mais que 255 caracteres' })
+   }
+
+   if(email.length > 255) {
+        return res.status(400).send({ error: 'O email não pode ter mais que 255 caracteres' })
+   }
+
+   const existingUser = await Users.findOne({
+       where: { 
+        email: email
+    }
+   })
+
+   if (existingUser) {
+       return res.status(400).send({ error: 'Email já cadastrado' })
+   }
+
+   next()
+}
+
+module.exports = {
+   validateCreateUser
+}
