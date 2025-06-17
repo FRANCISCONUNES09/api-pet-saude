@@ -12,4 +12,13 @@ router.get(
     '/users',
     usersController.getuser
 )
+router.delete(
+    '/users/:id',
+    usersController.deleteUser
+)
+
+router.put(
+    '/users/:id',
+    usersController.updateUser
+)
 module.exports = router;
