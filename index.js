@@ -5,9 +5,12 @@ const port = 4028;
 require("./src/models");
 const usersRoutes = require("./src/routes/users");
 const authRoutes = require("./src/routes/auth");
+const agendamentoRoutes = require('./src/routes/agendamentoRoutes'); 
 const adocaoRoutes = require('./src/routes/adocao');
-app.use(adocaoRoutes);
 
+app.use(express.json());
+app.use(adocaoRoutes);
+app.use(agendamentoRoutes);
 app.use(express.json());
 app.use(usersRoutes);
 app.use(authRoutes);
