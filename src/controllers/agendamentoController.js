@@ -1,26 +1,50 @@
-const agendarConsulta = async (req, res) => {
-  const { pet, dataHora, tipoConsulta, nome, telefone } = req.body;
+const { Agendamento } = require('../models');
 
-  if (!pet || !dataHora || !tipoConsulta || !nome || !telefone) {
-    return res
-      .status(400)
-      .json({ mensagem: "Por favor, preencha todos os campos." });
+// Criar agendamento
+async function createAgendamento(req, res) {
+  try {
+    await Agendamento.create(req.body);
+    return res.status(201).send('Agendamento criado com sucesso');
+  } catch (error) {
+    return res.status(500).send({ error: 'Erro ao criar agendamento' });
   }
+}
 
-  const agendamento = {
-    pet,
-    dataHora,
-    tipoConsulta,
-    nome,
-    telefone,
-  };
+// Listar todos os agendamentos
+async function getAgendamentos(req, res) {
+  try {
+    const agendamentos = await Agendamento.findAll();
+    return res.send(agendamentos);
+  } catch (error) {
+    return res.status(500).send({ error: 'Erro ao buscar agendamentos' });
+  }
+}
 
-  res.status(200).json({
-    mensagem: "Agendamento feito com sucesso!",
-    agendamento,
-  });
-};
+// Deletar agendamento
+async function deleteAgendamento(req, res) {
+  const { id } = req.params;
+  try {
+    await Agendamento.destroy({ where: { id } });
+    return res.status(200).send('Agendamento deletado com sucesso');
+  } catch (error) {
+    return res.status(500).send({ error: 'Erro ao deletar agendamento' });
+  }
+}
+
+// Atualizar agendamento
+async function updateAgendamento(req, res) {
+  const { id } = req.params;
+  try {
+    await Agendamento.update(req.body, { where: { id } });
+    return res.status(200).send('Agendamento atualizado com sucesso');
+  } catch (error) {
+    return res.status(500).send({ error: 'Erro ao atualizar agendamento' });
+  }
+}
 
 module.exports = {
-  agendarConsulta,
+  createAgendamento,
+  getAgendamentos,
+  deleteAgendamento,
+  updateAgendamento
 };

@@ -1,6 +1,7 @@
 const sequelize = require('../config/database')
 const Users = require('./users')
 const Exame = require('./exame')
+const Agendamento = require('./agendamento');
 
 
 sequelize.sync({alter: true})
@@ -13,5 +14,6 @@ sequelize.sync({alter: true})
 
     module.exports = {
         Users,
-        Exame
+        Exame,
+        Agendamento,
     }
