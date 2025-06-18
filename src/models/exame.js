@@ -1,4 +1,3 @@
-// src/models/exame.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
@@ -31,13 +30,9 @@ const Exame = sequelize.define('Exame', {
     type: DataTypes.STRING,
     allowNull: true
   },
-  animalId: {
-    type: DataTypes.INTEGER,
+  animalnome: {
+    type: DataTypes.STRING,
     allowNull: false,
-    references: {
-      model: 'Animais', 
-      key: 'id'
-    }
   }
 }, {
   timestamps: false
