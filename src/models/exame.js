@@ -33,7 +33,13 @@ const Exame = sequelize.define('Exame', {
   animalnome: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+
+    animalfoto: {
+    type: DataTypes.STRING,
+    allowNull: true, 
   }
+
 }, {
   timestamps: false
 });

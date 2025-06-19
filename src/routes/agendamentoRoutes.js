@@ -1,15 +1,34 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const {
-  createAgendamento,
-  getAgendamentos,
-  deleteAgendamento,
-  updateAgendamento
-} = require('../controllers/agendamentoController');
+const { Agendamento } = require("../models");
 
-router.post('/agendamentos', createAgendamento);
-router.get('/agendamentos', getAgendamentos);
-router.delete('/agendamentos/:id', deleteAgendamento);
-router.put('/agendamentos/:id', updateAgendamento);
+router.post("/api/agendamentos", async (req, res) => {
+  try {
+    const { pet, dataHora, tipoConsulta, nome, telefone } = req.body;
+
+    const novoAgendamento = await Agendamento.create({
+      pet,
+      dataHora,
+      tipoConsulta,
+      nome,
+      telefone,
+      ligadoAExame: tipoConsulta === "exame"
+    });
+
+    return res.status(201).json(novoAgendamento);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Erro ao agendar consulta" });
+  }
+});
+
+router.get("/api/agendamentos", async (req, res) => {
+  try {
+    const agendamentos = await Agendamento.findAll();
+    return res.status(200).json(agendamentos);
+  } catch (error) {
+    return res.status(500).json({ error: "Erro ao buscar agendamentos" });
+  }
+});
 
 module.exports = router;

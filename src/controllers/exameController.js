@@ -1,34 +1,36 @@
-const {Exame} = require("../models")
 
-
+const { Exame } = require('../models');
 const listarExames = async (req, res) => {
   try {
-    const exames = await Exame.findAll()
-
-    return res.send(exames)
+    const exames = await Exame.findAll();
+    return res.json(exames);
   } catch (error) {
-    
+    console.error('Erro ao buscar exames:', error);
+    return res.status(500).json({ error: 'Erro ao buscar exames' });
   }
 };
 
 
-const adicionarExame = (req, res) => {
-  const { nome, dataSolicitacao, dataExame, status, profissional, resultadoDisponivel, animal, observacoes } = req.body;
+const adicionarExame = async (req, res) => {
+  const { nome, dataSolicitacao, dataExame, status, profissional, resultadoDisponivel, animalnome, observacoes } = req.body;
 
-  const novoExame = {
-    id: exames.length + 1,  
-    nome,
-    dataSolicitacao,
-    dataExame,
-    status,
-    profissional,
-    resultadoDisponivel,
-    animal,
-    observacoes
-  };
-
-  exames.push(novoExame);  
-  res.status(201).json(novoExame);  
+  try {
+    const novoExame = await Exame.create({
+      nome,
+      dataSolicitacao,
+      dataExame,
+      status,
+      profissional,
+      resultadoDisponivel,
+      animalnome,
+      observacoes
+    });
+    
+    return res.status(201).json(novoExame);
+  } catch (error) {
+    console.error('Erro ao adicionar exame:', error);
+    return res.status(500).json({ error: 'Erro ao adicionar exame' });
+  }
 };
 
 module.exports = { listarExames, adicionarExame };

@@ -1,33 +1,34 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/database");
 
-const Agendamento = sequelize.define('Agendamento', {
-  nomeAnimal: {
+const Agendamento = sequelize.define("Agendamento", {
+  pet: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
-  especie: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  tutor: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  data: {
+  dataHora: {
     type: DataTypes.DATE,
-    allowNull: false
+    allowNull: false,
   },
-  horario: {
+  tipoConsulta: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
-  observacoes: {
+  nome: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false,
+  },
+  telefone: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  ligadoAExame: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
   }
 }, {
-  timestamps: false
+  timestamps: false,
 });
 
 module.exports = Agendamento;
