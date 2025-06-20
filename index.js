@@ -5,10 +5,7 @@ const port = process.env.PORT || 4028;
 
 const cors = require("cors");
 app.use(
-  cors({
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  })
+  cors()
 );
 
 app.use(express.json());
